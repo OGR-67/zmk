@@ -968,4 +968,6 @@ struct key_layer_override overrides[] = {
     {.pixel = 7, .layer = 2, .color = {.h = 120, .s = 255, .b = 255}, .on = true},
 };
 
+#define NUM_OVERRIDES (sizeof(overrides) / sizeof(overrides[0]))
+
 SYS_INIT(keymap_init, APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY);
