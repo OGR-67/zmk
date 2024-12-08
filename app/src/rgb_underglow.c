@@ -138,9 +138,29 @@ static struct led_rgb hsb_to_rgb(struct zmk_led_hsb hsb) {
     return rgb;
 }
 
+// static void zmk_rgb_underglow_effect_solid(void) {
+//     for (int i = 0; i < STRIP_NUM_PIXELS; i++) {
+//         pixels[i] = hsb_to_rgb(hsb_scale_min_max(state.color));
+//     }
+// }
 static void zmk_rgb_underglow_effect_solid(void) {
+    zmk_keymap_layer_index_t active_layer = zmk_keymap_highest_layer_active();
+
     for (int i = 0; i < STRIP_NUM_PIXELS; i++) {
-        pixels[i] = hsb_to_rgb(hsb_scale_min_max(state.color));
+        // Couleur par défaut
+        struct zmk_rgb color = hsb_to_rgb(hsb_scale_min_max(state.color));
+
+        // Vérifier les overrides
+        for (int j = 0; j < NUM_OVERRIDES; j++) {
+            struct key_layer_override *override = &overrides[j];
+            if (override->on && override->pixel == i && override->layer == active_layer) {
+                color = hsb_to_rgb(hsb_scale_min_max(override->color));
+                break;
+            }
+        }
+
+        // Appliquer la couleur au pixel
+        pixels[i] = color;
     }
 }
 

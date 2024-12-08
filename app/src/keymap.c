@@ -23,6 +23,15 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/events/layer_state_changed.h>
 #include <zmk/events/sensor_event.h>
 
+#include <zmk/rgb_underglow.h>
+
+struct key_layer_override overrides[] = {
+    {.pixel = 3, .layer = 1, .color = {.h = 0, .s = 255, .b = 255}, .on = true},
+    {.pixel = 7, .layer = 2, .color = {.h = 120, .s = 255, .b = 255}, .on = true},
+};
+
+#define NUM_OVERRIDES (sizeof(overrides) / sizeof(overrides[0]))
+
 static zmk_keymap_layers_state_t _zmk_keymap_layer_state = 0;
 static zmk_keymap_layer_id_t _zmk_keymap_layer_default = 0;
 
