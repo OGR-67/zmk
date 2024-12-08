@@ -25,6 +25,7 @@
 #include <zmk/events/activity_state_changed.h>
 #include <zmk/events/usb_conn_state_changed.h>
 #include <zmk/workqueue.h>
+#include <zmk/layers.h>
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
@@ -57,6 +58,13 @@ struct rgb_underglow_state {
     uint8_t animation_speed;
     uint8_t current_effect;
     uint16_t animation_step;
+    bool on;
+};
+
+struct key_layer_override {
+    uint16_t pixel;
+    uint8_t layer;
+    struct zmk_led_hsb color;
     bool on;
 };
 
